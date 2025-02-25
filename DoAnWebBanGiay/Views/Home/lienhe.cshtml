@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "lienhe";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<!-- Tạo khoảng cách -->
+<div style="height: 100px;"></div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center animate__animated animate__fadeIn">Liên Hệ với Footwear Luxury</h1>
+            <p class="lead text-center animate__animated animate__fadeIn">Chúng tôi luôn sẵn sàng lắng nghe ý kiến của bạn.</p>
+        </div>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+        <!-- Thêm justify-content-center để căn giữa -->
+        <div class="col-md-6 text-center animate__animated animate__fadeInLeft">
+            <!-- Thêm text-center để căn giữa nội dung trong cột -->
+            <h2>Thông Tin Liên Hệ</h2>
+            <p>Đơn vị: Trường Đại học Công Thương TP. Hồ Chí Minh</p>
+            <p>Email: info@huit.edu.vn</p>
+            <p>Điện thoại: 0283 8163 31</p>
+            <p>Địa chỉ: 140 Lê Trọng Tấn, Phường Tây Thạnh, Quận Tân Phú, TP.HCM</p>
+        </div>
+        <div class="col-md-6 text-center animate__animated animate__fadeInRight">
+            <!-- Thêm text-center để căn giữa nội dung trong cột -->
+            <h2>Thông Tin Nhóm</h2>
+            <p>Tên đồ án: Website Bán Giày Footwear Luxury</p>
+            <p>Tên nhóm: Có Phước Cùng Hưởng</p>
+            <p>Thành viên:</p>
+            <ul class="list-unstyled">
+                <!-- Thêm list-unstyled để loại bỏ dấu chấm đầu dòng -->
+                <li>Trương Văn Thạch Bảo</li>
+                <li>Nguyễn Thế Duy</li>
+                <li>Dương Trọng Đức</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Hiệu ứng khi cuộn trang
+        $(window).scroll(function() {
+            $('.animate__animated').each(function() {
+                var pos = $(this).offset().top;
+                var winTop = $(window).scrollTop();
+                if (pos < winTop + 600) {
+                    $(this).addClass('animate__fadeIn');
+                }
+            });
+        });
+    });
+</script>

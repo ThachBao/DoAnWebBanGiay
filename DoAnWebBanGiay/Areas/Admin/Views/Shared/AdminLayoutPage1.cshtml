@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shop giày dép cao cấp">
+    <title>Footwear Luxury</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" />
+
+    <style>
+        .top-bar {
+            height: 20px;
+            background-color: black;
+            width: 100%;
+        }
+
+        .navbar {
+            margin-top: 0;
+            height: 100px; /* Đặt chiều cao cho navbar */
+            transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
+            z-index: 1000; /* Đảm bảo navbar nằm trên banner */
+            position: relative; /* Để z-index có hiệu lực */
+        }
+
+            .navbar:hover {
+                background-color: #f8f9fa; /* Thay đổi màu nền khi hover */
+            }
+
+        /* Đặt màu nền cho menu khi mở */
+        .navbar-collapse {
+            background-color: #f8f9fa; /* Màu nền cho menu khi mở */
+        }
+
+        /* Đảm bảo màu chữ của các mục trong navbar */
+        .navbar-nav .nav-link {
+            color: #000; /* Màu chữ của các mục */
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: #007bff; /* Màu chữ khi hover */
+            }
+
+        /* CSS cho banner */
+        .banner {
+            position: relative;
+            height: 400px; /* Chiều cao của banner */
+            overflow: hidden;
+            margin-top: -100px; /* Đẩy banner lên để không bị che khuất */
+        }
+
+            .banner img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Đảm bảo hình ảnh phủ đầy banner mà không bị biến dạng */
+            }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/Admin/homeadmin/index" style="font-weight:bold">Admin Footwear<span style="color:red">Luxury</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/Admin/HomeAdmin/Index" style="font-size: 18px;">Trang Chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Admin/ProductsAdmin/Index" style="font-size: 18px;">Danh Mục Sản Phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Admin/ManagementUser/Index" style="font-size: 18px;">Danh Mục Người Dùng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Admin/OrderAdmin/Index" style="font-size: 18px;">Quản trị đơn hàng</a></li>
+                </ul>
+
+                <!--<div class="d-flex align-items-center ms-auto">-->
+                    <!-- Sử dụng ms-auto để đẩy sang phải -->
+                    <!--<form class="d-flex me-4" action="/Admin/Products/Index" method="get">
+                        <input class="form-control me-2" type="search"
+                               value="@ViewBag.search" name="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>-->
+                    <div>
+                        <ul class="navbar-nav">
+                            @if (Request.Cookies["auth"] != null)
+                            {
+                                <li class="nav-item">
+                                    <span class="nav-link">Xin chào, @Request.Cookies["auth"].Value!</span>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Users/Logout">Đăng xuất</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Users/Login">Đăng Nhập</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Banner -->
+    <div class="banner">
+        <img src="~/Image/Image_Decore/gioithieu_1.jpg" alt="Banner Image"> <!-- Thay thế bằng URL hình ảnh của bạn -->
+    </div>
+
+    <!-- Slider -->
+
+    @RenderBody()
+
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4 mb-3 text-center">
+                    <h5>Sản phẩm</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none">Giày Nam</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Giày Nữ</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4 mb-3 text-center">
+                    <h5>Liên hệ chúng tôi</h5>
+                    <ul class="list-unstyled ">
+                        <li><a href="#" class="text-white text-decoration-none">Email: contact@example.com</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">SĐT: 0123-456-789</a></li>
+                    </ul>
+                    <div class="footer_social">
+                        <a href="#" style="color: #3b5998;"><i class="fab fa-facebook-f me-2"></i></a> <!-- Facebook -->
+                        <a href="#" style="color: #1da1f2;"><i class="fab fa-twitter me-2"></i></a> <!-- Twitter -->
+                        <a href="#" style="color: #c32aa3;"><i class="fab fa-instagram me-2"></i></a> <!-- Instagram -->
+                        <a href="#" style="color: #0077b5;"><i class="fab fa-linkedin"></i></a> <!-- LinkedIn -->
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 text-md-end mb-3">
+                    <h5 class="text-center">Thành viên nhóm thiết kế</h5>
+                    <ul class="list-unstyled text-center">
+                        <li><a href="#" class="text-white text-decoration-none">Trương Văn Thạch Bảo</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Nguyễn Thế Duy</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Dương Trọng Đức</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center mt-3">
+                    <p>&copy; 2024 Footwear <span style="color:red">Luxury</span> . All rights reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS và các phụ thuộc (jQuery và Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+
+</body>
+</html>

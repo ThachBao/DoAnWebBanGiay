@@ -1,0 +1,52 @@
+﻿@model DoAnWebBanGiay.Models.UserProF
+
+@{
+    ViewBag.Title = "Thông Tin Cá Nhân";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2 class="text-center  text-danger mt-2">Thông Tin Cá Nhân</h2>
+
+<div class="container1 mt-3 mb-5">
+    <div class="form-group">
+        <label for="fullName">Họ tên</label>
+        <div class="form-control-plaintext" id="fullName">@Model.FullName</div>
+    </div>
+    <div class="form-group">
+        <label for="phoneNumber">Số điện thoại</label>
+        <div class="form-control-plaintext" id="phoneNumber">@Model.PhoneNumber</div>
+    </div>
+    <div class="form-group">
+        <label for="address">Địa chỉ</label>
+        <div class="form-control-plaintext" id="address">@Model.Address</div>
+    </div>
+    <div class="form-group">
+        <label for="birthDate">Ngày sinh</label>
+        <div class="form-control-plaintext" id="birthDate">@Model.BirthDate.ToString("dd/MM/yyyy")</div>
+    </div>
+    <div class="text-center">
+        <a href="@Url.Action("Edit", "UserPFs", new { userId = Model.UserId })" class="btn btn-primary">Chỉnh sửa</a>
+    </div>
+</div>
+
+<style>
+    .form-group {
+        margin-bottom: 15px; /* Khoảng cách giữa các ô */
+    }
+
+    .form-control-plaintext {
+        background-color: #f8f9fa; /* Màu nền nhẹ nhàng */
+        border: 1px solid #ced4da; /* Đường viền nhẹ */
+        border-radius: 0.25rem; /* Bo tròn góc */
+        padding: 10px; /* Padding cho ô */
+        color: #495057; /* Màu chữ */
+    }
+    .container1 {
+        max-width: 600px; /* Giới hạn chiều rộng của form */
+        background-color: #ffffff; /* Màu nền trắng cho form */
+        border-radius: 8px; /* Bo tròn các góc */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
+        padding: 20px; /* Padding cho form */
+        margin: 0 auto;
+    }
+</style>

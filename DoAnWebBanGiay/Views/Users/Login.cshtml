@@ -1,0 +1,68 @@
+﻿@model DoAnWebBanGiay.Models.User
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+@if (TempData["LoginMessage"] != null)
+{
+    <div class="alert alert-warning text-center" id="loginMessage">
+        @TempData["LoginMessage"]
+    </div>
+}
+
+<div class="container_1 mt-5 mb-5">
+    <h2 class="text-center mb-4">Đăng Nhập</h2>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @Html.ValidationSummary(true)
+        </div>
+    }
+    @using (Html.BeginForm("Login", "Users", FormMethod.Post))
+    {
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-12">
+                <div class="form-group mb-3">
+                    @Html.LabelFor(model => model.UserName, "Tên Đăng Nhập", new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "Nhập tên đăng nhập" })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group mb-3">
+                    @Html.LabelFor(model => model.Password, "Mật Khẩu", new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", type = "password", placeholder = "Nhập mật khẩu" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+                <div class="text-center">
+                    <input type="submit" value="Đăng Nhập" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <span>Bạn chưa có tài khoản?</span>
+            @Html.ActionLink("Đăng ký", "Register", "Users", null, new { @class = "link-primary" })
+        </div>
+    }
+</div>
+
+<style>
+    .container_1 {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa;
+    }
+</style>
+
+<script>
+    // Hiển thị thông báo trong 3 giây
+    setTimeout(function () {
+        var message = document.getElementById("loginMessage");
+        if (message) {
+            message.style.display = "none";
+        }
+    }, 3000);
+</script>

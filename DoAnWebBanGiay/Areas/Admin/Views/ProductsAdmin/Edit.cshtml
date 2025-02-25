@@ -1,0 +1,87 @@
+﻿@model DoAnWebBanGiay.Models.Product
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayoutPage1.cshtml";
+}
+
+<h2 class="text-center text-warning mt-4 ">Sửa Sản Phẩm</h2>
+
+@using (Html.BeginForm("Edit", "ProductsAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container">
+        <div class="card shadow mt-4 mb-4">
+            <div class="card-header bg-warning text-white text-center">
+                <h5 class="mb-0">Cập nhật thông tin sản phẩm</h5>
+            </div>
+            <div class="card-body">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ProId)
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.ProName, "Tên sản phẩm", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.ProName, new { @class = "form-control", placeholder = "Nhập tên sản phẩm" })
+                    @Html.ValidationMessageFor(m => m.ProName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.MoTa, "Mô tả sản phẩm", new { @class = "form-label" })
+                    @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control", rows = "3" })
+                    @Html.ValidationMessageFor(m => m.MoTa, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Gia, "Giá sản phẩm (VNĐ)", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Gia, new { @class = "form-control", type = "number", step = "0.01" })
+                    @Html.ValidationMessageFor(m => m.Gia, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <label>Hình ảnh hiện tại:</label>
+                    <div class="mb-2">
+                        @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                        {
+                            <img src="@Url.Content("~/Images/" + Model.HinhAnh)" alt="Ảnh sản phẩm" class="img-thumbnail" style="max-width: 200px;" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">Không có ảnh</span>
+                        }
+                    </div>
+                    <input type="file" name="imageFile" class="form-control" />
+                    @Html.ValidationMessage("Image", "", new { @class = "text-danger" })
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.BanChay, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.BanChay, "Sản phẩm bán chạy", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.Moi, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.Moi, "Sản phẩm mới", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.KhuyenMai, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.KhuyenMai, "Sản phẩm khuyến mãi", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.CategoryId, "Loại sản phẩm", new { @class = "form-label" })
+                    @Html.DropDownListFor(m => m.CategoryId, new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"), "Chọn loại sản phẩm", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-warning px-4 me-2">Cập nhật</button>
+                    <a href="@Url.Action("Index", "ProductsAdmin")" class="btn btn-secondary px-4">Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

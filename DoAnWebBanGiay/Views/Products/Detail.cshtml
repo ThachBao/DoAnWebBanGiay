@@ -1,0 +1,234 @@
+﻿@model DoAnWebBanGiay.Models.Product
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<style>
+    body {
+        background-color: #f9f9f9;
+    }
+
+    .product-container {
+        max-width: 1200px;
+        margin: 30px auto;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .product-details {
+        padding: 30px;
+    }
+
+    .product-title {
+        font-size: 2rem;
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .product-price {
+        font-size: 1.5rem;
+        color: #d9534f;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .product-info {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .size-button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .size-label {
+        position: relative;
+        flex: 1 1 calc(33.33% - 15px);
+    }
+
+    .size-button {
+        display: block;
+        padding: 15px;
+        text-align: center;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.3s;
+        cursor: pointer;
+    }
+
+        .size-button:hover {
+            background-color: #28a745;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+    .size-radio:checked + .size-button {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .stock-info {
+        display: block;
+        margin-top: 5px;
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    .size-radio:checked + .size-button {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .quantity-group {
+        margin-bottom: 20px;
+    }
+
+        .quantity-group label {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .quantity-group input {
+            padding: 10px;
+            width: 100%;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+    .btn-primary,
+    .btn-warning {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        font-weight: bold;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+</style>
+
+<div class="product-container">
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success text-center" id="success-message">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger text-center" id="error-message">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-6">
+            <div class="product-image">
+                <img src="@Url.Content(Model.HinhAnh)" alt="@Model.ProName" />
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <div class="product-details">
+                <h1 class="product-title">@Model.ProName</h1>
+                <p class="product-price">@String.Format("{0:N0} VNĐ", Model.Gia)</p>
+                <p class="product-info">@Model.MoTa</p>
+                <p class="product-info"><strong>Danh mục:</strong> @Model.Category.CategoryName</p>
+
+                <form method="post" action="@Url.Action("Add", "Carts")">
+                    <input type="hidden" name="id" value="@Model.ProId" />
+                    <h4>Chọn kích thước:</h4>
+                    <div class="size-button-group">
+                        @if (ViewBag.sizes != null)
+                        {
+                            foreach (var size in (List<DoAnWebBanGiay.Models.ProductSize>)ViewBag.sizes)
+                            {
+                                <label class="size-label">
+                                    <input type="radio" name="productSizeId" value="@size.ProductSizeId" class="size-radio" required style="display:none;" />
+                                    <span class="size-button">Size: @size.Size</span>
+                                    <span class="stock-info" id="stock-@size.ProductSizeId" style="display:none;">Tồn kho: @size.Quantity</span>
+                                </label>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-danger">Không có kích thước nào khả dụng cho sản phẩm này.</p>
+                        }
+                    </div>
+
+                    <div class="quantity-group">
+                        <label for="quantity">Số lượng:</label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-warning">Thêm vào giỏ hàng</button>
+                </form>
+
+                <a href="@Url.Action("Index", "Products")" class="btn btn-primary mt-3">Quay lại danh sách sản phẩm</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    // Tự động ẩn thông báo thành công và lỗi sau 3 giây
+    function hideMessage(elementId) {
+        const messageElement = document.getElementById(elementId);
+        if (messageElement) {
+            setTimeout(() => {
+                messageElement.style.display = 'none';
+            }, 3000); // Thời gian ẩn sau 3 giây
+        }
+    }
+
+    // Gọi hàm để ẩn thông báo nếu có
+    hideMessage('success-message');
+    hideMessage('error-message');
+
+    // Kiểm tra kích thước đã chọn khi bấm nút thêm vào giỏ hàng
+    document.querySelector('.btn-warning').addEventListener('click', function (event) {
+        const selectedSize = document.querySelector('input[name="productSizeId"]:checked');
+        if (!selectedSize) {
+            event.preventDefault(); // Ngăn chặn form submit
+            // Hiển thị thông báo lỗi
+            const errorMessage = document.createElement('div');
+            errorMessage.id = 'error-message';
+            errorMessage.className = 'alert alert-danger text-center';
+            errorMessage.innerText = 'Vui lòng chọn kích thước trước khi thêm vào giỏ hàng.';
+            document.querySelector('.product-details').prepend(errorMessage);
+            hideMessage('error-message'); // Ẩn thông báo sau 3 giây
+        }
+    });
+</script>

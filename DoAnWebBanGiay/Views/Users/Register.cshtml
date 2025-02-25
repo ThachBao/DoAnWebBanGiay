@@ -1,0 +1,75 @@
+﻿@model DoAnWebBanGiay.Models.User
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<div class="container_1 mt-5 mb-5">
+
+    <h2 class="text-center text-danger">Register</h2>
+
+    @using (Html.BeginForm("Register", "Users", FormMethod.Post))
+    {
+        <input type="hidden" name="role" value="user" />
+        <div class="row my-2">
+            <div class="col-md-2"></div>
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.UserName, "Tên Đăng Nhập")
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control custom-width", placeholder = "Nhập tên đăng nhập" }) <!-- Thêm lớp CSS -->
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger " })
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-md-2"></div>
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Password, "Mật Khẩu")
+                @Html.TextBoxFor(model => model.Password, new { @class = "form-control custom-width", type = "password", placeholder = "Nhập mật khẩu" }) <!-- Thêm lớp CSS -->
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-md-2"></div>
+            <div class="col-md-6">
+                @Html.Label("Nhập Lại Mật Khẩu", new { @for = "retypePassword" })
+                @Html.TextBox("retypePassword", "", new { @class = "form-control custom-width", type = "password", placeholder = "Nhập lại mật khẩu" }) <!-- Thêm lớp CSS -->
+                @Html.ValidationMessage("retypePassword", "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-md-2"></div>
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Email, "Email")
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control custom-width", placeholder = "Nhập Email" }) <!-- Thêm lớp CSS -->
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row my-2 mt-3">
+            <div class="col-md-12 text-center">
+                <!-- Thêm lớp text-center -->
+                <input type="submit" value="Đăng Ký" class="btn btn-primary" />
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <span>Bạn đã có tài khoản?</span>
+            @Html.ActionLink("Đăng nhập", "Login", "Users", null, new { @class = "link-primary" }) <!-- Thêm liên kết đến trang đăng ký -->
+        </div>
+    }
+</div>
+
+<style>
+    .container_1 {
+        max-width: 500px; /* Giới hạn chiều rộng tối đa cho form */
+        margin: auto; /* Căn giữa form */
+        padding: 20px; /* Thêm khoảng cách bên trong */
+        border: 1px solid #dee2e6; /* Đường viền cho form */
+        border-radius: 0.5rem; /* Bo góc cho form */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
+        background-color: #f8f9fa; /* Màu nền cho form */
+    }
+
+    .custom-width {
+        width: 300px; /* Chiều rộng 100% để chiếm toàn bộ không gian */
+        max-width: 400px; /* Giới hạn chiều rộng tối đa */
+        height: 40px; /* Chiều cao mặc định */
+        padding: 10px; /* Thêm khoảng cách bên trong cho textbox */
+    }
+</style>

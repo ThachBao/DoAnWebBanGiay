@@ -1,0 +1,94 @@
+﻿@model List<DoAnWebBanGiay.Models.Cart>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger text-center">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<h2 class="text-center">Giỏ hàng của bạn</h2>
+
+@if (Model.Count == 0)
+{
+    <p style="color:red;text-align:center;font-weight:bold">Giỏ hàng của bạn đang trống.</p>
+    <div class="text-center mb-4">
+        <a href="/Products/Index" class="btn btn-secondary ">Tiếp tục mua hàng</a>
+    </div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên Sản phẩm</th>
+                <th>Kích thước</th>
+                <th>Hình ảnh</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int i = 1; int totPrice = 0; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@item.Product.ProName</td>
+                    <td>@item.ProductSizes.Size</td>
+                    <td><img src="@item.Product.HinhAnh" alt="Loi" width="100px" height="50px" /></td>
+                    <td>
+                        <form action="@Url.Action("UpdateQuantity", "Carts")" method="post">
+                            <input type="hidden" name="proid" value="@item.ProId" />
+                            <input type="hidden" name="productSizeId" value="@item.ProductSizeId" />
+                            <input type="number" name="quan" value="@item.SoLuong" min="1" class="form-control" />
+                            <button type="submit" class="btn btn-primary btn-sm mt-2">Cập nhật</button>
+                        </form>
+                    </td>
+                    <td>
+                        @{
+                            int Price = item.SoLuong * (int)item.Product.Gia;
+                            totPrice += Price;
+                            i++;
+                        }
+                        @Price.ToString("N0") VNĐ
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Delete", "Carts", FormMethod.Get))
+                        {
+                            <input type="hidden" name="id" value="@item.ProId" />
+                            <input type="hidden" name="productSizeId" value="@item.ProductSizeId" />
+                            <input type="submit" value="Xóa" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <td colspan="5" class="text-center fw-bold">Tổng tiền</td>
+            <td class="text-center fw-bold">@totPrice.ToString("N0") VNĐ</td>
+            <td>
+                <a href="@Url.Action("Checkout", "Carts")" class="btn btn-warning btn-block">Thanh toán</a>
+            </td>
+        </tr>
+    </table>
+    <div class="d-flex justify-content-between mt-4">
+        <a href="/Products/Index" class="btn btn-secondary">Tiếp tục mua hàng</a>
+        <form method="post" action="@Url.Action("DeleteAll", "Carts")">
+            <input type="submit" value="Xóa tất cả sản phẩm" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa tất cả sản phẩm trong giỏ hàng?');" />
+        </form>
+    </div>
+}
+

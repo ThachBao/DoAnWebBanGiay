@@ -1,0 +1,13 @@
+﻿
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayoutPage1.cshtml";
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success text-center" data-aos="fade-in">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<h2 class="text-center text-danger">Xin Chào Bạn Đến Với Admin Shop Footwear Luxury</h2>
+

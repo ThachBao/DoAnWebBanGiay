@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "gioithieu";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Tạo khoảng cách -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron animate__animated animate__fadeIn">
+                <h1 class="display-4 text-center">Chào mừng đến với Footwear Luxury!</h1>
+                <p class="lead text-center">Nơi mang đến những đôi giày hoàn hảo cho bạn</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 animate__animated animate__fadeInLeft">
+            <h2>Giới thiệu về Footwear Luxury</h2>
+            <p>
+                Footwear Luxury được ra đời với sứ mệnh mang đến cho khách hàng những sản phẩm giày dép chất lượng cao, mẫu mã đa dạng,
+                đáp ứng nhu cầu thời trang và phong cách của mọi lứa tuổi. Chúng tôi tự hào là địa chỉ tin cậy cho những ai đam mê giày dép thời trang, tìm kiếm sự thoải mái và bền bỉ.
+            </p>
+        </div>
+        <div class="col-md-6 animate__animated animate__fadeInRight">
+            <img src="~/Image/Image_Decore/new_slider_image.jpg" alt="Footwear Luxury" class="img-fluid rounded">
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row mt-4">
+        <div class="col-md-6 animate__animated animate__fadeInLeft">
+            <img src="~/Image/Image_Decore/gioithieu_1.jpg" alt="Sự khác biệt của Footwear Luxury" class="img-fluid rounded">
+        </div>
+        <div class="col-md-6 animate__animated animate__fadeInRight">
+            <h2>Điểm khác biệt của Footwear Luxury</h2>
+            <p>
+                Tại Footwear Luxury, chúng tôi không chỉ cung cấp những đôi giày hợp thời trang mà còn đặc biệt chú trọng vào chất lượng và trải nghiệm của người dùng.
+                Mỗi sản phẩm đều được chọn lọc kỹ lưỡng từ những thương hiệu uy tín, đảm bảo sự thoải mái và bền bỉ trong từng bước đi.
+            </p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row mt-4">
+        <div class="col-md-12 animate__animated animate__fadeIn">
+            <h2>Mục tiêu của chúng tôi</h2>
+            <p>
+                Chúng tôi không ngừng phát triển để trở thành thương hiệu giày dép hàng đầu trên thị trường, luôn cập nhật những mẫu mã mới nhất và
+                cung cấp dịch vụ chăm sóc khách hàng tận tâm. HIME Shop hướng tới việc xây dựng lòng tin và sự hài lòng từ mọi khách hàng.
+            </p>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12 animate__animated animate__fadeIn">
+            <h2>Lý do nên lựa chọn Footwear Luxury</h2>
+            <ul class="list-unstyled">
+                <li><i class="fas fa-check-circle"></i> Sản phẩm chất lượng cao, mẫu mã đa dạng</li>
+                <li><i class="fas fa-check-circle"></i> Đội ngũ tư vấn chuyên nghiệp, nhiệt tình</li>
+                <li><i class="fas fa-check-circle"></i> Chính sách đổi trả linh hoạt, dễ dàng</li>
+                <li><i class="fas fa-check-circle"></i> Chương trình khuyến mãi và hậu mãi hấp dẫn</li>
+            </ul>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row mt-5 text-center">
+        <div class="col-md-12 animate__animated animate__fadeIn">
+            <h3>Hãy đến với Footwear Luxury và trải nghiệm sự khác biệt!</h3>
+            <a href="@Url.Action("index", "Home")" class="btn btn-primary btn-lg mt-3 animate__animated animate__pulse animate__infinite">Khám phá ngay</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Hiệu ứng khi cuộn trang
+        $(window).scroll(function () {
+            $('.animate__animated').each(function () {
+                var pos = $(this).offset().top;
+                var winTop = $(window).scrollTop();
+                if (pos < winTop + 600) {
+                    $(this).addClass('animate__fadeIn');
+                }
+            });
+        });
+    });
+</script>

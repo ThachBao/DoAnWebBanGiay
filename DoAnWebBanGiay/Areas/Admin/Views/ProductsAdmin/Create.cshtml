@@ -1,0 +1,98 @@
+﻿@model DoAnWebBanGiay.Models.Product
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayoutPage1.cshtml";
+}
+
+<h2 class="text-center text-primary mt-4">Thêm Sản Phẩm</h2>
+
+@using (Html.BeginForm("Create", "ProductsAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container">
+        <div class="card shadow mt-4 mb-4">
+            <div class="card-header bg-primary text-white text-center">
+                <h5 class="mb-0">Thông tin sản phẩm</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.ProName, "Tên sản phẩm", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.ProName, new { @class = "form-control", placeholder = "Nhập tên sản phẩm" })
+                    @Html.ValidationMessageFor(m => m.ProName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.MoTa, "Mô tả sản phẩm", new { @class = "form-label" })
+                    @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control", placeholder = "Nhập mô tả sản phẩm", rows = "3" })
+                    @Html.ValidationMessageFor(m => m.MoTa, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Gia, "Giá sản phẩm (VNĐ)", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Gia, new { @class = "form-control", type = "number", placeholder = "Nhập giá sản phẩm", step = "0.01" })
+                    @Html.ValidationMessageFor(m => m.Gia, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.Label("Hình ảnh sản phẩm", new { @class = "form-label" })
+                    <input type="file" name="imageFile" class="form-control" />
+                    @Html.ValidationMessage("Image", "", new { @class = "text-danger" })
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.BanChay, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.BanChay, "Sản phẩm bán chạy", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.Moi, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.Moi, "Sản phẩm mới", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.KhuyenMai, new { @class = "form-check-input" })
+                            @Html.LabelFor(m => m.KhuyenMai, "Sản phẩm khuyến mãi", new { @class = "form-check-label" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.CategoryId, "Loại sản phẩm", new { @class = "form-label" })
+                    @Html.DropDownListFor(m => m.CategoryId, new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"), "Chọn loại sản phẩm", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+                </div>
+                <div id="sizeContainer">
+                    <div class="form-group">
+                        <label for="Size">Kích thước:</label>
+                        <input type="number" class="form-control" name="Sizes[0].Size" required />
+                        <label for="Quantity">Số lượng:</label>
+                        <input type="number" class="form-control" name="Sizes[0].Quantity" required />
+                    </div>
+                </div>
+
+                <button class="mt-2 mb-3" type="button" onclick="addSize()">Thêm kích thước</button>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary px-4 me-2">Thêm sản phẩm</button>
+                    <a href="@Url.Action("Index", "ProductsAdmin")" class="btn btn-secondary px-4">Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>let sizeIndex = 1;
+    function addSize() {
+        const container = document.getElementById('sizeContainer');
+        const newSize = `
+            <div class="form-group">
+                <label for="Size">Kích thước:</label>
+                <input type="number" class="form-control" name="Sizes[${sizeIndex}].Size" required />
+                <label for="Quantity">Số lượng:</label>
+                <input type="number" class="form-control" name="Sizes[${sizeIndex}].Quantity" required />
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', newSize);
+        sizeIndex++;
+    }</script>

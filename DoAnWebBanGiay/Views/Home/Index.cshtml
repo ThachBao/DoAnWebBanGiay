@@ -1,0 +1,204 @@
+﻿@model List<DoAnWebBanGiay.Models.Product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<!-- Thêm CSS -->
+<style>
+    /* Container chung */
+    .container2 {
+        margin-top: 50px;
+    }
+
+    /* Hiệu ứng hover cho container sản phẩm */
+    .product-container {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 30px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .product-container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Ảnh sản phẩm */
+    .product_image {
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+    }
+
+        .product_image img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease-in-out;
+        }
+
+    .product-container:hover .product_image img {
+        transform: scale(1.1);
+    }
+
+    /* Tên và giá sản phẩm */
+    .product_name a {
+        font-size: 1.1rem;
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+        .product_name a:hover {
+            color: #007bff;
+        }
+
+    .product_price {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #d9534f;
+        margin: 10px 0;
+    }
+
+    /* Banner */
+    .banner {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+        .banner img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.5s ease;
+        }
+
+            .banner img:hover {
+                transform: scale(1.05);
+            }
+
+    /* Nút tương tác */
+    .btn-primary {
+        transition: transform 0.2s ease, background-color 0.3s;
+        width: 50%;
+    }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            background-color: #0056b3;
+            color: #fff;
+        }
+
+    /* Hiệu ứng nút bấm */
+    .btn-clicked {
+        animation: click-effect 0.3s ease-in-out;
+    }
+</style>
+
+<!-- Thêm AOS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000, // Thời gian hiệu ứng
+        once: true      // Hiệu ứng chỉ chạy một lần
+    });
+</script>
+
+<!-- Thêm thông báo thành công -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success text-center" data-aos="fade-in">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<!-- Sản phẩm nổi bật -->
+<div class="container2" data-aos="fade-up">
+    <h2 class="text-center mb-4" data-aos="zoom-in">Sản Phẩm Nổi Bật</h2>
+    <div class="row">
+        @foreach (var product in Model.Take(3))
+        {
+            <div class="col-12 col-sm-6 col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="product-container">
+                    <div class="product_image">
+                        <img src="@Url.Content(product.HinhAnh)" alt="@product.ProName" class="img-fluid">
+                    </div>
+                    <div class="product_info text-center">
+                        <h6 class="product_name">
+                            <a href="@Url.Action("Detail", "Products", new { id = product.ProId })">@product.ProName</a>
+                        </h6>
+                        <div class="product_price">
+                            @String.Format("{0:N0} VNĐ", product.Gia)
+                        </div>
+                        <a href="@Url.Action("Detail", "Products", new { id = product.ProId })" class="btn btn-primary mt-2">Xem Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Sản phẩm Nam -->
+<div class="container" data-aos="fade-up">
+    <h2 class="text-center mb-4" data-aos="zoom-in">Sản Phẩm Nam</h2>
+    <div class="banner">
+        <img src="~/Image/Image_Decore/blog_3.jpg" alt="Banner Giày Nam">
+    </div>
+    <div class="row">
+        @foreach (var product in Model.Where(pro => pro.CategoryId == 1).Take(3))
+        {
+            <div class="col-12 col-sm-6 col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="product-container">
+                    <div class="product_image">
+                        <img src="@Url.Content(product.HinhAnh)" alt="@product.ProName" class="img-fluid">
+                    </div>
+                    <div class="product_info text-center">
+                        <h6 class="product_name">
+                            <a href="@Url.Action("Detail", "Products", new { id = product.ProId })">@product.ProName</a>
+                        </h6>
+                        <div class="product_price">
+                            @String.Format("{0:N0} VNĐ", product.Gia)
+                        </div>
+                        <a href="@Url.Action("Detail", "Products", new { id = product.ProId })" class="btn btn-primary mt-2">Xem Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Sản phẩm Nữ -->
+<div class="container" data-aos="fade-up">
+    <h2 class="text-center mb-4" data-aos="zoom-in">Sản Phẩm Nữ</h2>
+    <div class="banner">
+        <img src="~/Image/Image_Decore/banner_1.jpg" alt="Banner Giày Nữ">
+    </div>
+    <div class="row">
+        @foreach (var product in Model.Where(pro => pro.CategoryId == 2).Take(3))
+        {
+            <div class="col-12 col-sm-6 col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="product-container">
+                    <div class="product_image">
+                        <img src="@Url.Content(product.HinhAnh)" alt="@product.ProName" class="img-fluid">
+                    </div>
+                    <div class="product_info text-center">
+                        <h6 class="product_name">
+                            <a href="@Url.Action("Detail", "Products", new { id = product.ProId })">@product.ProName</a>
+                        </h6>
+                        <div class="product_price">
+                            @String.Format("{0:N0} VNĐ", product.Gia)
+                        </div>
+                        <a href="@Url.Action("Detail", "Products", new { id = product.ProId })" class="btn btn-primary mt-2">Xem Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

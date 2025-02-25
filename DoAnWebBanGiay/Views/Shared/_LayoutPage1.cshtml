@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shop giày dép cao cấp">
+    <title>Footwear Luxury</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        .top-bar {
+            height: 20px;
+            background-color: black;
+            width: 100%;
+        }
+
+        .navbar {
+            transition: background-color 0.3s ease, padding 0.3s ease;
+        }
+
+            .navbar.scrolled {
+                background-color: #343a40 !important;
+                padding: 10px 0;
+            }
+
+        .navbar-brand span {
+            color: red;
+        }
+
+        /* Banner */
+        .carousel-inner img {
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000;
+            transition: color 0.3s ease;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: #007bff;
+                text-decoration: underline;
+            }
+
+        .footer_social a {
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+            .footer_social a:hover {
+                transform: scale(1.2);
+            }
+
+        .dropdown-menu {
+            min-width: 200px; /* Đặt chiều rộng tối thiểu cho dropdown */
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa; /* Màu nền khi hover */
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/home/index" style="font-weight:bold">Footwear<span>Luxury</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link text-decoration-none" href="/Home/Index">Trang Chủ</a></li>
+                    <li class="nav-item"><a class="nav-link text-decoration-none" href="/Home/gioithieu">Giới Thiệu</a></li>
+                    <li class="nav-item"><a class="nav-link text-decoration-none" href="/Products/Index">Sản Phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link text-decoration-none" href="/Home/lienhe">Liên Hệ</a></li>
+                </ul>
+                <div class="d-flex align-items-center ms-auto">
+                    <form class="d-flex me-3" action="/Products/Index" method="get">
+                        <input class="form-control me-2"
+                               type="search"
+                               name="search"
+                               placeholder="Search"
+                               value="@Request.QueryString["search"]">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+
+                    <div class="me-3">
+                        <a href="/Carts/Index" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i> Giỏ Hàng
+                        </a>
+                    </div>
+                    <ul class="navbar-nav">
+                        @if (Request.Cookies["auth"] != null)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-decoration-none" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user-circle text-decoration-none"></i> @Request.Cookies["auth"].Value
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item text-decoration-none" href="/UserPFs/Index">Thông tin cá nhân</a></li>
+                                    <li><a class="dropdown-item text-decoration-none" href="/Users/Logout">Đăng xuất</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item d-flex align-items-center">
+                                <a class="nav-link text-decoration-none" href="/Users/Login">
+                                    <i class="fas fa-user-circle me-1" style="font-size: 1.5rem;"></i> Đăng Nhập
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Carousel -->
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="~/Image/Image_Decore/gioithieu_1.jpg" class="d-block w-100" alt="Slide 1">
+            </div>
+            <div class="carousel-item">
+                <img src="~/Image/Image_Decore/new_slider_image.jpg" class="d-block w-100" alt="Slide 2">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <!-- Content -->
+    @RenderBody()
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4 mb-3 text-center">
+                    <h5>Sản phẩm</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none">Giày Nam</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Giày Nữ</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4 mb-3 text-center">
+                    <h5>Liên hệ chúng tôi</h5>
+                    <ul class="list-unstyled ">
+                        <li><a href="#" class="text-white text-decoration-none">Email: contact@example.com</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">SĐT: 0123-456-789</a></li>
+                    </ul>
+                    <div class="footer_social">
+                        <a href="#" style="color: #3b5998;"><i class="fab fa-facebook-f me-2"></i></a> <!-- Facebook -->
+                        <a href="#" style="color: #1da1f2;"><i class="fab fa-twitter me-2"></i></a> <!-- Twitter -->
+                        <a href="#" style="color: #c32aa3;"><i class="fab fa-instagram me-2"></i></a> <!-- Instagram -->
+                        <a href="#" style="color: #0077b5;"><i class="fab fa-linkedin"></i></a> <!-- LinkedIn -->
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 text-md-end mb-3">
+                    <h5 class="text-center">Thành viên nhóm thiết kế</h5>
+                    <ul class="list-unstyled text-center">
+                        <li><a href="#" class="text-white text-decoration-none">Trương Văn Thạch Bảo</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Nguyễn Thế Duy</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Dương Trọng Đức</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center mt-3">
+                    <p>&copy; 2024 Footwear <span style="color:red">Luxury</span> . All rights reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(window).on("scroll", function () {
+            if ($(window).scrollTop() > 50) {
+                $(".navbar").addClass("scrolled");
+            } else {
+                $(".navbar").removeClass("scrolled");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+﻿@model DoAnWebBanGiay.Models.UserProF
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<h2 class="text-center text-danger mt-2">Cập Nhật Thông Tin Cá Nhân</h2>
+<div class="container1 mt-3 mb-5">
+
+    @using (Html.BeginForm("Edit", "UserPFs", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.UserId)
+
+        <div class="form-group">
+            <label>Họ tên:</label>
+            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FullName)
+        </div>
+
+        <div class="form-group">
+            <label>Số điện thoại:</label>
+            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PhoneNumber)
+        </div>
+
+        <div class="form-group">
+            <label>Địa chỉ:</label>
+            @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Address)
+        </div>
+
+        <div class="form-group">
+            <label>Ngày sinh:</label>
+            @Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control", @type = "date" })
+            @Html.ValidationMessageFor(model => model.BirthDate)
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">Lưu</button>
+            <a href="@Url.Action("Index", "UserPFs", new { userId = Model.UserId })" class="btn btn-primary">Quay Lại</a>
+        </div>
+    }
+</div>
+<style>
+    .form-group {
+        margin-bottom: 15px; /* Khoảng cách giữa các ô */
+    }
+
+    .form-control-plaintext {
+        background-color: #f8f9fa; /* Màu nền nhẹ nhàng */
+        border: 1px solid #ced4da; /* Đường viền nhẹ */
+        border-radius: 0.25rem; /* Bo tròn góc */
+        padding: 10px; /* Padding cho ô */
+        color: #495057; /* Màu chữ */
+    }
+
+    .container1 {
+        max-width: 600px; /* Giới hạn chiều rộng của form */
+        background-color: #ffffff; /* Màu nền trắng cho form */
+        border-radius: 8px; /* Bo tròn các góc */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
+        padding: 20px; /* Padding cho form */
+        margin: 0 auto;
+    }
+</style>

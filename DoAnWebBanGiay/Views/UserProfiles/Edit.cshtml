@@ -1,0 +1,56 @@
+﻿@model DoAnWebBanGiay.Models.UserProfile
+
+@{
+    ViewBag.Title = "Cập Nhật Thông Tin Cá Nhân";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2 class="text-center mb-4">Cập Nhật Thông Tin Cá Nhân</h2>
+
+<div class="container_1">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FullName, "Họ và tên")
+            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FullName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, "Số điện thoại")
+            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PhoneNumber)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, "Địa chỉ")
+            @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Address)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BirthDate, "Ngày sinh")
+            @Html.TextBoxFor(model => model.BirthDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(model => model.BirthDate)
+        </div>
+
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+            <a href="@Url.Action("Index", "UserProfiles")" class="btn btn-secondary">Hủy</a>
+        </div>
+    }
+</div>
+
+<style>
+    .container_1 {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa;
+    }
+</style>

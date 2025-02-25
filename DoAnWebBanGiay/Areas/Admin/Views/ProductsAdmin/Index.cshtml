@@ -1,0 +1,123 @@
+﻿@model List<DoAnWebBanGiay.Models.Product>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayoutPage1.cshtml";
+}
+
+<h2 class="text-center text-primary mt-3">Danh Sách Sản Phẩm</h2>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <!-- Dropdown sắp xếp -->
+        <form method="get" action="@Url.Action("Index", "ProductsAdmin")" class="d-inline-block">
+            <input type="hidden" name="category" value="@Request.QueryString["category"]" />
+            <input type="hidden" name="search" value="@ViewBag.search" />
+            <select name="sortOrder" onchange="this.form.submit()" class="form-select w-auto d-inline-block">
+                <option value="">Sắp xếp theo</option>
+                <option value="asc" @(Request.QueryString["sortOrder"] == "asc" ? "selected" : "")>Giá: Thấp - Cao</option>
+                <option value="desc" @(Request.QueryString["sortOrder"] == "desc" ? "selected" : "")>Giá: Cao - Thấp</option>
+            </select>
+        </form>
+    </div>
+    <div>
+        <a href="@Url.Action("Create", "ProductsAdmin")" class="btn btn-success">
+            <i class="fas fa-plus"></i> Thêm Sản Phẩm
+        </a>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="bg-primary text-white">
+            <tr>
+                <th>Mã Sản Phẩm</th>
+                <th>Tên Sản Phẩm</th>
+                <th>Mô tả</th>
+                <th>Giá</th>
+                <th>Ảnh</th>
+                <th>Bán Chạy</th>
+                <th>Mới</th>
+                <th>Khuyến Mãi</th>
+                <th>Loại Sản Phẩm</th>
+                <th>Hành Động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProId</td>
+                    <td>@item.ProName</td>
+                    <td>@item.MoTa</td>
+                    <td>@String.Format("{0:N0} VND", item.Gia)</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.HinhAnh))
+                        {
+                            <img src="@item.HinhAnh" alt="@item.ProName" class="img-thumbnail" style="width: 100px; height: 100px;" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">Không có ảnh</span>
+                        }
+                    </td>
+                    <td>@(item.BanChay ? "Có" : "Không")</td>
+                    <td>@(item.Moi ? "Có" : "Không")</td>
+                    <td>@(item.KhuyenMai ? "Có" : "Không")</td>
+                    <td>@item.Category.CategoryName</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "ProductsAdmin", new { id = item.ProId })" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Sửa
+                        </a>
+                        <a href="@Url.Action("Delete", "ProductsAdmin", new { id = item.ProId })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">
+                            <i class="fas fa-trash-alt"></i> Xóa
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+        @if (ViewBag.page > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.page - 1, sortOrder = Request.QueryString["sortOrder"], category = Request.QueryString["category"], search = ViewBag.search })">
+                    <i class="fas fa-chevron-left"></i> Trước
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link">
+                    <i class="fas fa-chevron-left"></i> Trước
+                </a>
+            </li>
+        }
+
+        @for (int i = 1; i <= ViewBag.totalPages; i++)
+        {
+            <li class="page-item @(ViewBag.page == i ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i, sortOrder = Request.QueryString["sortOrder"], category = Request.QueryString["category"], search = ViewBag.search })">@i</a>
+            </li>
+        }
+
+        @if (ViewBag.page < ViewBag.totalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.page + 1, sortOrder = Request.QueryString["sortOrder"], category = Request.QueryString["category"], search = ViewBag.search })">
+                    Sau <i class="fas fa-chevron-right"></i>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link">
+                    Sau <i class="fas fa-chevron-right"></i>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
